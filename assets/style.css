@@ -136,3 +136,23 @@ pre code { background: none; padding: 0; font-size: inherit; }
 .flow i { font-style: normal; color: var(--muted); }
 
 .site-footer { border-top: 1px solid var(--line); margin-top: 48px; padding: 24px 0; font-size: 14px; color: var(--muted); }
+
+/* Hero quick facts */
+.highlights { display: flex; flex-wrap: wrap; gap: 8px 20px; padding: 0; margin: 0 0 4px; list-style: none; font-size: 15px; color: var(--muted); }
+.highlights strong { color: var(--text); }
+
+/* Experience timeline */
+.jobs { display: grid; gap: 28px; }
+.job header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; }
+.job h3 { margin: 0; }
+.job .org { margin: 2px 0 8px; color: var(--muted); }
+.job .when { font-size: 14px; color: var(--muted); font-family: var(--mono); white-space: nowrap; }
+.job ul { margin: 0; padding-left: 18px; }
+.job li + li { margin-top: 4px; }
+
+.card .status { font-family: var(--mono); font-size: 12px; color: var(--muted); margin: 0 0 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+.card.static { cursor: default; }
+.card.static:hover { border-color: var(--line); }
+
+.edu p { margin: 0 0 4px; }
+.edu .muted { color: var(--muted); }

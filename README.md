@@ -8,7 +8,7 @@ Plain HTML/CSS, no build step, hosted with GitHub Pages.
 ```
 index.html                     home page: intro, project cards, skills, contact
 assets/style.css               shared styles (light + dark mode)
-assets/resume.pdf              your resume (add this)
+assets/resume.pdf              resume linked from the home page
 projects/<name>/index.html     one page per project
 projects/<name>/img/           screenshots, diagrams, board photos
 projects/<name>/src/           source files (VHDL, XDC, C, MATLAB, ...)
@@ -26,9 +26,9 @@ To preview locally: `python3 -m http.server` in this folder, then open http://lo
 
 Search for `TODO` in the HTML:
 
-- `assets/resume.pdf`: add your resume
-- LinkedIn URL and contact email in `index.html`
 - A photo or short video of the Basys 3 running the lock (`projects/digital-lock/img/board.jpg`)
+
+When you update your resume, export it from Word as PDF and replace `assets/resume.pdf`.
 
 ## Adding a project with Claude Code
 
