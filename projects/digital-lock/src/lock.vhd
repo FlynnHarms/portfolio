@@ -1,4 +1,4 @@
--- Digital lock FSM with 3-strike lockout (EE 301 Lab 4, honors section)
+-- Digital lock FSM with 3-strike lockout
 -- Secret code: 0-3-2, entered on four one-hot push buttons.
 -- z = "001" unlocked, "010" wrong sequence, "100" locked out, "000" entering.
 library IEEE;

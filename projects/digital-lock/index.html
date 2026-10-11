@@ -32,10 +32,10 @@
     </ul>
 
     <dl class="facts">
-      <div><dt>Course</dt><dd>EE 301, Honors Section</dd></div>
-      <div><dt>School</dt><dd>CSU Long Beach</dd></div>
-      <div><dt>Date</dt><dd>Spring 2026</dd></div>
-      <div><dt>Team</dt><dd>Flynn Harms, Devin Urias</dd></div>
+      <div><dt>Date</dt><dd>April 2026</dd></div>
+      <div><dt>Language</dt><dd>VHDL</dd></div>
+      <div><dt>Tools</dt><dd>Questa Sim, Vivado</dd></div>
+      <div><dt>Hardware</dt><dd>Basys 3 (Artix-7)</dd></div>
     </dl>
 
     <section>
@@ -43,8 +43,8 @@
       <p>
         The lock reads a three-digit code (<code>0-3-2</code>) from four push buttons and drives three
         LEDs: one for <strong>unlocked</strong>, one for <strong>wrong code</strong>, and one for
-        <strong>locked out</strong>. The honors extension adds a lockout: after three wrong codes in a row,
-        the lock ignores every button until it is cleared with a reset switch.
+        <strong>locked out</strong>. After three wrong codes in a row, the lock ignores every button
+        until it is cleared with a reset switch.
       </p>
       <div class="flow">
         <span>Buttons</span><i>→</i><span>Debouncer</span><i>→</i><span>Lock FSM</span><i>→</i><span>LEDs</span>
@@ -61,13 +61,55 @@
         means holding a button down counts as one press, not one press per clock cycle.
       </p>
       <p>
-        The original lab version jumped to an error state as soon as one digit was wrong. In the honors
-        version, all three digits are stored in registers and checked together after the last one is released.
-        The lock no longer shows <em>which</em> digit was wrong, so a user can't guess the code one digit at a time.
+        All three digits are stored in registers and checked together after the last button is released.
+        The lock never shows <em>which</em> digit was wrong, so a user can't guess the code one digit at a time.
       </p>
       <figure>
-        <img src="img/state-diagram.jpg" alt="Hand-drawn state diagram of the digital lock" loading="lazy">
-        <figcaption>State diagram drawn before writing the VHDL. It was the map for the code.</figcaption>
+        <svg class="fsm" viewBox="0 0 870 370" role="img" aria-labelledby="fsm-title">
+          <title id="fsm-title">State diagram of the lock: s0, w0, s1, w1, s2 and w2 in a chain, then unlocked, error or lockout</title>
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+            </marker>
+          </defs>
+          <g class="edges" marker-end="url(#arrow)">
+            <path d="M14,180 H52"/>
+            <path d="M106,180 H156"/><path d="M210,180 H260"/><path d="M314,180 H364"/>
+            <path d="M418,180 H468"/><path d="M522,180 H572"/>
+            <path d="M622,166 L748,82"/>
+            <path d="M626,180 H740"/>
+            <path d="M622,194 L748,278"/>
+            <path d="M780,22 V10 H80 V152"/>
+            <path d="M780,338 V354 H80 V208"/>
+            <path d="M816,166 C850,146 850,214 816,194"/>
+          </g>
+          <g class="labels">
+            <text x="24" y="170">CLR</text>
+            <text x="131" y="170">press</text><text x="235" y="170">release</text>
+            <text x="339" y="170">press</text><text x="443" y="170">release</text>
+            <text x="547" y="170">press</text>
+            <text x="652" y="108" text-anchor="start">code = 0-3-2</text>
+            <text x="683" y="172">3rd wrong</text>
+            <text x="652" y="262" text-anchor="start">1st or 2nd wrong</text>
+            <text x="430" y="26">any press: start over</text>
+            <text x="430" y="346">any press: try again</text>
+            <text x="840" y="234">stays</text>
+          </g>
+          <g class="nodes">
+            <circle cx="80" cy="180" r="26"/><circle cx="184" cy="180" r="26"/><circle cx="288" cy="180" r="26"/>
+            <circle cx="392" cy="180" r="26"/><circle cx="496" cy="180" r="26"/><circle cx="600" cy="180" r="26"/>
+            <circle class="out" cx="780" cy="60" r="38"/><circle class="out" cx="780" cy="180" r="38"/><circle class="out" cx="780" cy="300" r="38"/>
+          </g>
+          <g class="names">
+            <text x="80" y="185">s0</text><text x="184" y="185">w0</text><text x="288" y="185">s1</text>
+            <text x="392" y="185">w1</text><text x="496" y="185">s2</text><text x="600" y="185">w2</text>
+            <text x="780" y="56">s3</text><text x="780" y="176">lockout</text><text x="780" y="296">err</text>
+          </g>
+          <g class="outputs">
+            <text x="780" y="74">z=001</text><text x="780" y="194">z=100</text><text x="780" y="314">z=010</text>
+          </g>
+        </svg>
+        <figcaption>State diagram. Entry states output <code>z = 000</code>; the three end states each light one LED.</figcaption>
       </figure>
 
       <div class="scroll-x">
