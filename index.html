@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flynn Harms | Electrical Engineering</title>
+  <meta name="description" content="Portfolio of Flynn Harms, an electrical engineering student at California State University, Long Beach, working in power system protection, DSP and machine learning, and FPGA design.">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./">Flynn Harms</a>
+      <nav class="nav">
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>Flynn S. Harms</h1>
+      <p class="role">Electrical Engineering · California State University, Long Beach · Class of 2027</p>
+      <ul class="highlights">
+        <li><strong>3.96</strong> GPA</li>
+        <li>Honors Program</li>
+        <li>President's &amp; Dean's List</li>
+        <li>IEEE · Tau Beta Pi</li>
+        <li>Los Angeles, CA</li>
+      </ul>
+      <p>
+        I am an electrical engineering student working at the intersection of power systems and
+        signal processing. At Southern California Edison, I write protection standards and test relay
+        schemes in the lab. In CSULB's DSP laboratory, I develop machine-learning methods that detect
+        high-impedance faults in utility data. I also design digital hardware in VHDL for FPGAs.
+      </p>
+      <div class="links">
+        <a class="btn primary" href="assets/resume.pdf">Resume (PDF)</a>
+        <a class="btn" href="https://www.linkedin.com/in/flynn-harms/">LinkedIn</a>
+        <a class="btn" href="https://github.com/flynnharms">GitHub</a>
+        <a class="btn" href="mailto:flynnharms@yahoo.com">Email</a>
+      </div>
+    </section>
+
+    <section id="experience">
+      <h2>Experience</h2>
+      <div class="jobs">
+        <article class="job">
+          <header>
+            <h3>Protection Standards Engineer Intern</h3>
+            <span class="when">May 2026 – Present</span>
+          </header>
+          <p class="org">Southern California Edison · Pomona, CA</p>
+          <ul>
+            <li>Updated 35+ protection standards for a panel retrofit: programmed relays, developed logic diagrams, and verified outputs through lab testing.</li>
+            <li>Develop and revise protection and control standards for safe, reliable operation of the electric grid.</li>
+            <li>Test protection schemes, relay behavior and high-impedance faults in the lab.</li>
+            <li>Configure and evaluate protective-relay settings using engineering calculations, test data and technical standards.</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <header>
+            <h3>Undergraduate Research Assistant</h3>
+            <span class="when">May 2026 – Present</span>
+          </header>
+          <p class="org">CSULB Neural Network and Multidisciplinary DSP Laboratory</p>
+          <ul>
+            <li>Develop a machine-learning and DSP workflow to detect high-impedance faults in distribution circuits using Southern California Edison data.</li>
+            <li>Implement and compare detection methods in MATLAB and Python under normal and abnormal operating scenarios.</li>
+            <li>Define test cases and criteria for model accuracy, robustness and false detections.</li>
+            <li>Work with faculty and utility engineers to set objectives, document methods and interpret results.</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <header>
+            <h3>Engineering Tutor</h3>
+            <span class="when">Jan 2026 – Aug 2026</span>
+          </header>
+          <p class="org">CSULB College of Engineering</p>
+          <ul>
+            <li>Tutored EE 310 Signals and Systems, EE 330 Analog Circuits, EE 201 Digital Logic and PHYS 254 Modern Physics.</li>
+            <li>Guided students through circuit analysis, Fourier analysis, Boolean logic, finite-state machines and physics problems.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="cards">
+        <a class="card" href="projects/digital-lock/">
+          <img src="projects/digital-lock/img/thumb.png" alt="Questa Sim waveform of the digital lock reaching the lockout state">
+          <div class="body">
+            <h3>FPGA Digital Lock with Lockout</h3>
+            <p>A three-digit combination lock, written in VHDL as a finite state machine, that locks the user out after three wrong codes. I simulated it in Questa Sim and ran it on a Basys 3 FPGA board.</p>
+            <ul class="tags">
+              <li>VHDL</li><li>FSM</li><li>Questa Sim</li><li>Vivado</li><li>Artix-7</li>
+            </ul>
+          </div>
+        </a>
+
+        <div class="card static">
+          <div class="body">
+            <p class="status">Senior design · In progress</p>
+            <h3>AC/DC Power Conversion and Battery Backup</h3>
+            <p>A self-contained system that converts 120 V, 60 Hz AC into regulated DC and low-power AC, with battery charging, PWM inversion, sensing and protection. The full-bridge rectifier has been built and verified in simulation, and topology trade studies are underway.</p>
+            <ul class="tags">
+              <li>Power electronics</li><li>Rectifier</li><li>DC/DC</li><li>PWM inverter</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <div class="skills">
+        <div>
+          <h3>Programming &amp; modeling</h3>
+          <ul>
+            <li>MATLAB, Simulink</li>
+            <li>Python, C++, Assembly</li>
+            <li>VHDL / FPGA design</li>
+            <li>AutoCAD, Altium</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Engineering</h3>
+          <ul>
+            <li>Protective relaying &amp; standards</li>
+            <li>Analog &amp; digital circuit design</li>
+            <li>Digital signal processing</li>
+            <li>Machine learning</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Lab &amp; tools</h3>
+          <ul>
+            <li>Oscilloscope, multimeter, function generator</li>
+            <li>LabVIEW, myDAQ</li>
+            <li>Questa Sim, Xilinx Vivado</li>
+            <li>Basys 3 (Artix-7) FPGA</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="edu">
+      <h2>Education</h2>
+      <p><strong>B.S. Electrical Engineering</strong>, California State University, Long Beach. Expected May 2027.</p>
+      <p class="muted">GPA 3.96/4.0 · Honors Program · President's and Dean's List 2025–2026 · IEEE and Tau Beta Pi</p>
+      <p class="muted">Relevant courses: Signals and Systems, Digital Signal Processing, Communication Systems, Control Systems, Digital Logic Design, DSP with Machine Learning.</p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>
+        <a href="mailto:flynnharms@yahoo.com">flynnharms@yahoo.com</a> ·
+        <a href="https://www.linkedin.com/in/flynn-harms/">linkedin.com/in/flynn-harms</a>
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">© 2026 Flynn Harms</div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FPGA Digital Lock | Flynn Harms</title>
+  <meta name="description" content="A VHDL combination-lock state machine with a three-strike lockout, simulated in Questa Sim and implemented on a Basys 3 Artix-7 FPGA.">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../../">Flynn Harms</a>
+      <nav class="nav">
+        <a href="../../#experience">Experience</a>
+        <a href="../../#projects">Projects</a>
+        <a href="../../#skills">Skills</a>
+        <a href="../../#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="breadcrumb"><a href="../../#projects">Projects</a> / Digital Lock</p>
+    <h1 class="project-title">FPGA Digital Lock with 3-Strike Lockout</h1>
+    <p class="lede">
+      A push-button combination lock built as a finite state machine in VHDL,
+      verified in Questa Sim, and implemented on a Digilent Basys 3 board with Xilinx Vivado.
+    </p>
+    <ul class="tags">
+      <li>VHDL</li><li>FSM</li><li>Questa Sim</li><li>Vivado</li><li>Artix-7</li><li>Basys 3</li>
+    </ul>
+
+    <dl class="facts">
+      <div><dt>Date</dt><dd>April 2026</dd></div>
+      <div><dt>Language</dt><dd>VHDL</dd></div>
+      <div><dt>Tools</dt><dd>Questa Sim, Vivado</dd></div>
+      <div><dt>Hardware</dt><dd>Basys 3 (Artix-7)</dd></div>
+    </dl>
+
+    <section>
+      <h2>Overview</h2>
+      <p>
+        The lock reads a three-digit code (<code>0-3-2</code>) from four push buttons and drives three
+        LEDs: one for <strong>unlocked</strong>, one for <strong>wrong code</strong>, and one for
+        <strong>locked out</strong>. After three wrong codes in a row, the lock ignores every button
+        until it is cleared with a reset switch.
+      </p>
+      <div class="flow">
+        <span>Buttons</span><i>→</i><span>Debouncer</span><i>→</i><span>Lock FSM</span><i>→</i><span>LEDs</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>Design</h2>
+
+      <h3>State machine</h3>
+      <p>
+        Each digit uses two states: one that waits for a press (<code>s0</code>, <code>s1</code>, <code>s2</code>)
+        and one that waits for release (<code>w0</code>, <code>w1</code>, <code>w2</code>). Waiting for release
+        means holding a button down counts as one press, not one press per clock cycle.
+      </p>
+      <p>
+        All three digits are stored in registers and checked together after the last button is released.
+        The lock never shows <em>which</em> digit was wrong, so a user can't guess the code one digit at a time.
+      </p>
+      <figure>
+        <img src="img/state-diagram.jpg" alt="Hand-drawn state diagram of the digital lock" loading="lazy">
+        <figcaption>State diagram I drew before writing the VHDL. It was the map for the code.</figcaption>
+      </figure>
+
+      <div class="scroll-x">
+        <table>
+          <thead><tr><th>State</th><th>Output <code>z</code></th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>s0 … w2</code></td><td><code>000</code></td><td>Entering digits</td></tr>
+            <tr><td><code>s3</code></td><td><code>001</code></td><td>Unlocked, fail counter reset</td></tr>
+            <tr><td><code>err</code></td><td><code>010</code></td><td>Wrong code (1st or 2nd)</td></tr>
+            <tr><td><code>lockout</code></td><td><code>100</code></td><td>Third wrong code, held until CLR</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Code check and fail counter</h3>
+      <p>
+        When the third button is released, the FSM compares the stored digits to the secret code.
+        A separate counter goes up only on the clock edge where the machine <em>enters</em> the error
+        state, so a wrong code counts once no matter how long it stays there.
+      </p>
+<pre><code>when w2 =&gt;
+    if btn = "0000" then
+        if (d0 = "0001" and d1 = "1000" and d2 = "0100") then
+            next_state &lt;= s3;        -- correct: unlock
+        elsif fail_count = 2 then
+            next_state &lt;= lockout;   -- third wrong sequence
+        else
+            next_state &lt;= err;       -- wrong sequence 1 or 2
+        end if;
+    end if;</code></pre>
+
+      <h3>Debouncing</h3>
+      <p>
+        Mechanical buttons bounce for a few milliseconds when pressed. The debouncer divides the 100&nbsp;MHz
+        board clock with an 18-bit counter (to about 381&nbsp;Hz), samples the buttons into a 3-stage shift
+        register, and only passes a button through when all three samples are high.
+      </p>
+    </section>
+
+    <section>
+      <h2>Verification</h2>
+      <p>
+        I tested the lock in Questa Sim before putting it on hardware. The waveform below runs
+        one correct entry and then three wrong ones:
+      </p>
+      <ul>
+        <li>The correct code <code>0-3-2</code> reaches <code>s3</code> and lights the unlock output (<code>z = 001</code>).</li>
+        <li>Each of the next two wrong codes enters <code>err</code> (<code>z = 010</code>) and raises <code>fail_count</code> to 1, then 2.</li>
+        <li>The third wrong code goes to <code>lockout</code> (<code>z = 100</code>), and later button presses have no effect.</li>
+      </ul>
+      <figure>
+        <img src="img/questa-waveform.png" alt="Questa Sim waveform showing state, button inputs, output z and fail_count" loading="lazy">
+        <figcaption>Questa Sim waveform: inputs <code>btn</code>, output <code>z</code>, current <code>state</code> and <code>fail_count</code>.</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2>Hardware</h2>
+      <p>
+        I synthesized the design in Vivado with an XDC constraints file mapping the ports to the Basys 3,
+        then programmed the Artix-7 over JTAG.
+      </p>
+      <div class="scroll-x">
+        <table>
+          <thead><tr><th>Signal</th><th>Pin</th><th>Board part</th></tr></thead>
+          <tbody>
+            <tr><td><code>clock</code></td><td>W5</td><td>100 MHz oscillator</td></tr>
+            <tr><td><code>b[0]</code> (digit 0)</td><td>T18</td><td>BTNU</td></tr>
+            <tr><td><code>b[1]</code> (digit 1)</td><td>W19</td><td>BTNL</td></tr>
+            <tr><td><code>b[2]</code> (digit 2)</td><td>U18</td><td>BTNC</td></tr>
+            <tr><td><code>b[3]</code> (digit 3)</td><td>T17</td><td>BTNR</td></tr>
+            <tr><td><code>z[0]</code> unlocked</td><td>U16</td><td>LD0</td></tr>
+            <tr><td><code>z[1]</code> wrong code</td><td>V14</td><td>LD7</td></tr>
+            <tr><td><code>z[2]</code> lockout</td><td>V13</td><td>LD8</td></tr>
+            <tr><td><code>clr</code> (active low)</td><td>V17</td><td>SW0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Source code</h2>
+      <ul>
+        <li><a href="src/lock.vhd">lock.vhd</a>: lock FSM with lockout</li>
+        <li><a href="src/debounce.vhd">debounce.vhd</a>: clock divider and button debouncer</li>
+        <li><a href="src/top_lock.vhd">top_lock.vhd</a>: top level connecting the two</li>
+        <li><a href="src/basys3.xdc">basys3.xdc</a>: Basys 3 pin constraints</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What I learned</h2>
+      <ul>
+        <li>Drawing the state diagram first made the VHDL a direct translation, with fewer bugs to chase in simulation.</li>
+        <li>Separate "wait for release" states are the simplest way to turn a held button into one event.</li>
+        <li>Counting on a state <em>transition</em> instead of on a state avoids counting the same event on every clock cycle.</li>
+        <li>A design that passes simulation can still fail on hardware without debouncing.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">© 2026 Flynn Harms · <a href="../../">Back to all projects</a></div>
+  </footer>
+</body>
+</html>
