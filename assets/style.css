@@ -157,12 +157,3 @@ pre code { background: none; padding: 0; font-size: inherit; }
 .edu p { margin: 0 0 4px; }
 .edu .muted { color: var(--muted); }
 
-/* Inline state diagram */
-.fsm { width: 100%; height: auto; display: block; color: var(--text); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 8px; }
-.fsm .edges path { fill: none; stroke: currentColor; stroke-width: 1.5; }
-.fsm .nodes circle { fill: var(--surface); stroke: currentColor; stroke-width: 1.5; }
-.fsm .nodes circle.out { fill: var(--accent-soft); stroke: var(--accent); }
-.fsm text { font-family: var(--mono); fill: currentColor; text-anchor: middle; }
-.fsm .names text { font-size: 14px; font-weight: 600; }
-.fsm .outputs text { font-size: 11px; fill: var(--muted); }
-.fsm .labels text { font-size: 12px; fill: var(--muted); }
