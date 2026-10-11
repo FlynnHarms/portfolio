@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flynn Harms | Electrical Engineering</title>
+  <meta name="description" content="Portfolio of Flynn Harms, electrical engineering student at California State University, Long Beach. Digital design, FPGA and embedded projects.">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./">Flynn Harms</a>
+      <nav class="nav">
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>Flynn Harms</h1>
+      <p class="role">Electrical Engineering, Senior · California State University, Long Beach</p>
+      <p>
+        I design digital hardware: finite state machines in VHDL, verified in simulation
+        and implemented on FPGAs. This site collects my lab and personal projects
+        with the design, code and test results for each.
+      </p>
+      <div class="links">
+        <!-- TODO: add your resume PDF as assets/resume.pdf -->
+        <a class="btn primary" href="assets/resume.pdf">Resume (PDF)</a>
+        <a class="btn" href="https://github.com/flynnharms">GitHub</a>
+        <!-- TODO: replace with your LinkedIn URL -->
+        <a class="btn" href="https://www.linkedin.com/in/YOUR-LINKEDIN">LinkedIn</a>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="cards">
+        <a class="card" href="projects/digital-lock/">
+          <img src="projects/digital-lock/img/thumb.png" alt="Questa Sim waveform of the digital lock reaching the lockout state">
+          <div class="body">
+            <h3>FPGA Digital Lock with Lockout</h3>
+            <p>A 3-digit combination lock FSM in VHDL that locks the user out after three wrong codes. Simulated in Questa Sim and running on a Basys 3.</p>
+            <ul class="tags">
+              <li>VHDL</li><li>FSM</li><li>Questa Sim</li><li>Vivado</li><li>Artix-7</li>
+            </ul>
+          </div>
+        </a>
+
+        <!-- Copy the card above for each new project -->
+        <div class="card placeholder">
+          <div class="body">More projects coming soon</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <div class="skills">
+        <div>
+          <h3>Digital design</h3>
+          <ul>
+            <li>VHDL (behavioral &amp; structural)</li>
+            <li>Finite state machines</li>
+            <li>Input debouncing &amp; clock division</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Tools</h3>
+          <ul>
+            <li>Questa Sim</li>
+            <li>Xilinx Vivado</li>
+            <li>Git &amp; GitHub</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Hardware</h3>
+          <ul>
+            <li>Digilent Basys 3 (Artix-7)</li>
+            <li>XDC pin constraints</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <!-- TODO: put the email address you want recruiters to use -->
+      <p>Email: <a href="mailto:you@example.com">you@example.com</a></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">© 2026 Flynn Harms</div>
+  </footer>
+</body>
+</html>
